@@ -1,0 +1,19 @@
+{
+  "name": "workboard",
+  "version": "0.0.4",
+  "description": "一个简易白板库",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "v": "webpack --help"
+  },
+  "author": "qianji",
+  "license": "",
+  "dependencies": {
+    "eventemitter3": "^5.0.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}

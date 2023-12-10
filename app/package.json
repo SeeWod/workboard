@@ -1,0 +1,28 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "element-plus": "^2.3.12",
+    "eventemitter3": "^5.0.1",
+    "less": "^4.2.0",
+    "less-loader": "^11.1.3",
+    "vue": "^3.2.13"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "~5.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "workspaces": [
+    "../workboard"
+  ]
+}
