@@ -8,8 +8,8 @@ export default class CooManager {
 
     this.scale =  1
     this.scroll = {x:0,y:0}
-    this.scrollX = 0
-    this.scrollY = 0
+    // this.scrollX = 0
+    // this.scrollY = 0
     this.rotate = 0
 
     this.scaleStep = 0.1
@@ -19,6 +19,7 @@ export default class CooManager {
 
   // 坐标轴移动
   changeScroll(opts = {scrollX:0,scrollY:0,offsetX,offsetY:0}) {
+    console.log(opts.scrollX,opts.scrollY,opts.offsetX,opts.offsetY)
     if(opts.scrollX !== undefined || opts.scrollY !== undefined){
       //参数为滚动值？
       this.scroll.x =  opts.scrollX
@@ -26,11 +27,11 @@ export default class CooManager {
     }else if(opts.offsetX !== undefined || opts.offsetY !== undefined){
       //参数为偏移量？
       this.scroll.x += opts.offsetX
-      this.scroll.x += opts.offsetY
+      this.scroll.y += opts.offsetY
     }else{
       return
     }
-    this.app.emit('scrollChange', this.scroll)
+    this.app.emit('scrollChange', this.scroll.x, this.scroll.y)
     this.app.render()
   }
 
