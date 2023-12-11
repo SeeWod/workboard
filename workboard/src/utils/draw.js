@@ -255,9 +255,16 @@ export const drawGrid = (ctx,x,y,width,height,distance,stroke)  => {
 
   ctx.arc(0,0,5,0,2*Math.PI);
   ctx.fill()
+
   for(let i =0;i<(y+height/2);i+=distance){
     ctx.moveTo(x-width/2 , i)
     ctx.lineTo(x+width/2, i)
+
+    //标尺
+    // if((Math.log(Math.round(i)) / Math.log(10)) % 1){
+    //   console.log(Math.log(1000)/Math.log(10))
+      // ctx.fillText(Math.round(i), 0, i)
+    // }
   }
   for(let i =0;i>(y-height/2);i-=distance){
     ctx.moveTo(x-width/2 , i)
@@ -271,7 +278,15 @@ export const drawGrid = (ctx,x,y,width,height,distance,stroke)  => {
     ctx.moveTo(i,  y-height/2)
     ctx.lineTo(i,  y+height/2)
   }
+  ctx.stroke()
+  //横轴 纵轴 深化
+  ctx.strokeStyle = '#dddddd'
+  ctx.beginPath()
+  ctx.moveTo(x-width/2 , 0)
+  ctx.lineTo(x+width/2, 0)
 
+  ctx.moveTo(0, y-height/2)
+  ctx.lineTo(0,  y+height/2)
   // this.ctx.moveTo(-this.containerWidth/2 , -100)
   // this.ctx.lineTo(this.containerWidth/2, -100)
 
