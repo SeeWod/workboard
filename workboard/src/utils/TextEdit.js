@@ -16,7 +16,8 @@ export default class TextEdit extends EventEmitter{
             position: 'fixed',
             display: 'block',
             visibility: 'hidden',
-            minHeight: '1em',
+            minHeight: '27px',
+            minWidth: "100px",
             backfaceVisibility: 'hidden',
 
             margin: 0,
@@ -26,6 +27,8 @@ export default class TextEdit extends EventEmitter{
             resize: 'none',
             background: '#0000',
             overflow: 'hidden',
+            verticalAlign: 'text-top',
+            // backgroundColor: '#454545'
             // whiteSpace: 'pre'
           })
 
@@ -39,16 +42,19 @@ export default class TextEdit extends EventEmitter{
     startEdit(editElement){
         //调整位置 相对屏幕坐标
         let {x,y} = this.eleManager.app.cooManager.transformOverallReverse(editElement.x, editElement.y)
+        let scale = this.eleManager.app.cooManager.scale
+
         this.textDom.style.top = y + "px"
         this.textDom.style.left = x + "px"
         this.textDom.style.fontFamily = editElement.style.fontFamily
         this.textDom.style.color = editElement.style.fillStyle
-        this.textDom.style.fontSize = editElement.style.fontSize+"px"
-        this.textDom.style.lineHeight = (editElement.style.lineHeightRatio * editElement.style.fontSize) +"px"
+        this.textDom.style.fontSize = editElement.style.fontSize * scale +"px"
 
-        this.textDom.style.width = editElement.width + "px"
-        this.textDom.style.height = editElement.height + "px"
-        this.textDom.style.minWidth = "100px"
+        this.textDom.style.lineHeight = (editElement.style.lineHeightRatio * (editElement.style.fontSize * scale)) +"px"
+
+
+        this.textDom.style.width = editElement.width * scale + "px"
+        this.textDom.style.height = editElement.height * scale + "px"
         //调整字符串
         this.editElement = editElement
         this.editElement.mode = 'editing'
@@ -61,13 +67,14 @@ export default class TextEdit extends EventEmitter{
     }
 
     onInput(e){
+        let scale = this.eleManager.app.cooManager.scale
         this.editElement.text = this.textDom.value
         this.editElement.updateSize()
         if(this.editElement.type == "text"){
-            this.textDom.style.width = this.editElement.width + "px"
-            this.textDom.style.height = this.editElement.height + "px"
+            this.textDom.style.width = this.editElement.width * scale + "px"
+            this.textDom.style.height = this.editElement.height * scale + "px"
         }
-        console.log(this.textDom.style.width)
+        // console.log(this.textDom.style.width)
     }
 
     onBlur(){
