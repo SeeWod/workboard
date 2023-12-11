@@ -146,10 +146,10 @@ export const drawText = (ctx, textObj, x, y, width, height) => {
   let lineHeight = style.fontSize * style.lineHeightRatio
   drawWrap(ctx, () => {
     ctx.font = getFontString(style.fontSize, style.fontFamily)
-    ctx.textBaseline = 'middle'
+    ctx.textBaseline = 'top'
     let textArr = splitTextLines(text)
     textArr.forEach((textRow, index) => {
-      ctx.fillText(textRow, x, y + (index * lineHeight + lineHeight / 2))
+      ctx.fillText(textRow, x, y + (index * lineHeight + lineHeight / 4))
     })
   })
   // drawRect(ctx, x, y, width, height)   //测试 点击边框
