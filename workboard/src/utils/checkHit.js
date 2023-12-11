@@ -115,48 +115,56 @@ export const checkIsAtArrowEdge = (element, rp) => {
 
 
 //激活 操作框
-const range = 10
+//判断点击到操作框的哪里
 export const checkIsAtFrameWhere = (element,rp,scale) => {
-  //转化：
-  //rp 转为 屏幕坐标
-  if(checkPointIsInRectangle(rp.x, rp.y, element.x+range, element.y+range, element.width - 2*range, element.height - 2*range)){
+  let sdistance = HIT_DISTANCE/element.app.cooManager.scale
+  //判断位置 sdistance 为屏幕参考系
+  if(checkPointIsInRectangle(rp.x, rp.y, element.x, element.y, element.width, element.height)){
+    console.log("inner")
     return 'inner'
   }
   //top-border
-  if(checkPointIsInRectangle(rp.x, rp.y, element.x+range, element.y-range, element.width - 2*range, 2*range)){
+  if(checkPointIsInRectangle(rp.x, rp.y, element.x, element.y-sdistance, element.width, sdistance)){
+    console.log("top-border")
     return 'top-border'
   }
   //bottom-border
-  if(checkPointIsInRectangle(rp.x, rp.y, element.x+range, element.y+element.height-range, element.width - 2*range, 2*range)){
+  if(checkPointIsInRectangle(rp.x, rp.y, element.x, element.y+element.height, element.width, sdistance)){
+    console.log("bottom-border")
     return 'bottom-border'
   }
   //left-border
-  if(checkPointIsInRectangle(rp.x, rp.y, element.x-range, element.y+range, 2*range, element.height - 2*range)){
+  if(checkPointIsInRectangle(rp.x, rp.y, element.x-sdistance, element.y, sdistance, element.height)){
+    console.log('left-border')
     return 'left-border'
   }
   //right-border
-  if(checkPointIsInRectangle(rp.x, rp.y, element.x+element.width-range, element.y+range, 2*range, element.height - 2*range)){
+  if(checkPointIsInRectangle(rp.x, rp.y, element.x+element.width, element.y, sdistance, element.height)){
+    console.log('right-border')
     return 'right-border'
   }
   //left-up-corner
-  if(checkPointIsInRectangle(rp.x, rp.y, element.x-range, element.y-range, 2*range, 2*range)){
+  if(checkPointIsInRectangle(rp.x, rp.y, element.x-sdistance, element.y-sdistance, sdistance, sdistance)){
+    console.log('left-up-corner')
     return 'left-up-corner'
   }  
   //right-up-corner
-  if(checkPointIsInRectangle(rp.x, rp.y, element.x+element.width-range, element.y-range, 2*range, 2*range)){
+  if(checkPointIsInRectangle(rp.x, rp.y, element.x+element.width, element.y-sdistance, sdistance, sdistance)){
+    console.log('right-up-corner')
     return 'right-up-corner'
   }
   //left-bottom-corner
-  if(checkPointIsInRectangle(rp.x, rp.y, element.x-range, element.y+element.height-range, 2*range, 2*range)){
+  if(checkPointIsInRectangle(rp.x, rp.y, element.x-sdistance, element.y+element.height, sdistance, sdistance)){
+    console.log('left-bottom-corner')
     return 'left-bottom-corner'
   }
   //right-bottom-corner
-  if(checkPointIsInRectangle(rp.x, rp.y, element.x+element.width-range, element.y+element.height-range, 2*range, 2*range)){
+  if(checkPointIsInRectangle(rp.x, rp.y, element.x+element.width, element.y+element.height, sdistance, sdistance)){
+    console.log('right-bottom-corner')
     return 'right-bottom-corner'
   }
-  let sdistance = HIT_DISTANCE/2/element.app.cooManager.scale
-  if(getTowPointDistance(element.width+element.x+6*sdistance,element.y-2*sdistance,rp.x,rp.y) < 2*sdistance){
-    console.log('rotating')
+  if(getTowPointDistance(element.width+element.x+3*sdistance,element.y-sdistance,rp.x,rp.y) < sdistance){
+    console.log("rotating")
     return 'rotating'
   }
 
