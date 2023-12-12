@@ -31,10 +31,12 @@ class WorkBoard extends EventEmitter{
     constructor(opts){
         super()
 
-        //参数 [容器元素、样式主题]
+        //参数 [容器元素、样式主题、媒体]
         this.opts = opts;
         this.container = opts.container
         this.style = opts.styleTheme || WorkBoard.defaultStyle
+        //媒体代表操作画板所用的设备，包括-鼠标键盘（MOUSE AND KEYBOARD）、触摸、..
+        this.media = opts.media || "MOUSE AND KEYBOARD"
 
         this.resizeObserver = null
         this.containerWidth = 0
@@ -89,18 +91,25 @@ class WorkBoard extends EventEmitter{
             this.render()
         });
         this.resizeObserver.observe(this.container);
-        //画布操作事件绑定
-        this.canvas.addEventListener("mousedown",this.onMousedown.bind(this))
-        this.canvas.addEventListener("mouseup",this.onMouseup.bind(this))
-        this.canvas.addEventListener("mousemove",throttle.call(this,this.onMousemove,20))
-        this.canvas.addEventListener("mousewheel",function(e){e.preventDefault();})
-        this.canvas.addEventListener("mousewheel",throttle.call(this,this.onMousewheel,20))
-        this.canvas.addEventListener("dblclick",this.onDbclick.bind(this))
-        // this.canvas.addEventListener("contextmenu",this.onContextmenu)
-        window.addEventListener("keydown",this.onKeydown.bind(this))
+
+        //画布操作接口绑定
+        switch(this.media){
+            case 'MOUSE AND KEYBOARD':
+                //鼠标和键盘 媒体 - 画布操作事件绑定
+                this.canvas.addEventListener("mousedown",this.onMousedown.bind(this))
+                this.canvas.addEventListener("mouseup",this.onMouseup.bind(this))
+                this.canvas.addEventListener("mousemove",throttle.call(this,this.onMousemove,20))
+                this.canvas.addEventListener("mousewheel",function(e){e.preventDefault();})
+                this.canvas.addEventListener("mousewheel",throttle.call(this,this.onMousewheel,20))
+                this.canvas.addEventListener("dblclick",this.onDbclick.bind(this))
+                // this.canvas.addEventListener("contextmenu",this.onContextmenu)
+                window.addEventListener("keydown",this.onKeydown.bind(this))
+                break;
+            default:
+                break;
+        }
     }
 
-    //属性赋值代理-只有一个背景，先不，先一个设置方法
 
     //画布操作的回调函数
     onMousedown(e){
@@ -289,11 +298,12 @@ class WorkBoard extends EventEmitter{
         this.ctx.restore()
     }
     switchGrid(){
-        this.cooManager.gridSwitch = !this.cooManager.gridSwitch;
+        this.cooManager.gridRender = !this.cooManager.gridRender;
         this.render()
     }
     setBackgroundColor(color){
         this.style.backgroundColor = color;
+        console.log(this.style.backgroundColor)
         this.render()
     }
     //白板操作

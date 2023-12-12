@@ -325,6 +325,15 @@ watch(
     }
   }
 )
+const backgroundColor = computed(() => {
+  return style.value?.backgroundColor
+})
+watch(
+  backgroundColor, 
+  () => {
+    app.setBackgroundColor(style.value.backgroundColor)
+  }
+)
 
 onMounted(() => {
   //创建实例
@@ -332,6 +341,7 @@ onMounted(() => {
     container: box.value
   })
   style.value = app.style
+  console.log(style.value.backgroundColor)
 
   app.on('scrollChange', (x ,y)=>{
     scroll.x = parseInt(x),
